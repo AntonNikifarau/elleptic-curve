@@ -16,8 +16,14 @@ public class Main {
     public static void main(String[] args) {
         EllipticCurve curve = new EllipticCurve(P, A, B);
 
-        System.out.println(curve.getPoints());
-        System.out.println(curve.multiply(p(1, 4), 5));
+        System.out.println("0 1");
+
+        for (Point point : curve.getPoints()) {
+            int order = curve.order(point);
+            System.out.println(point + " " + order);
+        }
+        //System.out.println(curve.getPoints());
+        //System.out.println(curve.multiply(p(1, 4), 5));
     }
 }
 
@@ -133,6 +139,17 @@ class EllipticCurve {
         return q;
     }
 
+    int order(Point p) {
+        int o = 1;
+        while (o <= mod) {
+            if (multiply(p, o) == null) {
+                break;
+            }
+            ++o;
+        }
+        return o;
+    }
+
     private boolean equation(long x, long y) {
         return mod(x * x * x + a * x + b - y * y, mod) == 0;
     }
@@ -182,6 +199,6 @@ class Point {
 
     @Override
     public String toString() {
-        return "{" + x + ", " + y + '}';
+        return "(" + x + ", " + y + ')';
     }
 }
