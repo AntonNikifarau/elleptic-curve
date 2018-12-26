@@ -31,7 +31,7 @@ public class Main {
 
                     EllipticCurve curve = new EllipticCurve(p, a, b);
 
-                    List<String> points = curve.getPointsNew().stream()
+                    List<String> points = curve.getPoints().stream()
                             .map(point -> point + " " + curve.order(point))
                             .collect(toList());
 
